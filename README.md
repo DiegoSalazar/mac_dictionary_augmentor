@@ -1,6 +1,6 @@
 # Mac Dictionary Augmentor
 
-Augments your Mac's spell check dictionary used by the spell checker and auto correct features you see while typing. Included is a parsed medical dictionary and a command to append it to your current dictionary. More spell check dictionaries may be used by providing newline separated lists of words.
+Augments your Mac's spell check dictionary used by the spell checker and auto correct features you see while typing. Included is a parsed medical dictionary and a command to merge it into your current dictionary. More spell check dictionaries may be used by providing newline separated lists of words.
 
 ## References
 
