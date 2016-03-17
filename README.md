@@ -25,7 +25,9 @@ You can provide the path to your own newline separated list of terms or you can 
 
 Or:
 
+```
 ./augment ./medical_terms.txt
+```
 
 ## Note
 
