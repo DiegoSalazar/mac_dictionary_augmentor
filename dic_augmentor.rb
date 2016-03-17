@@ -63,6 +63,6 @@ class DicAugmentor
   end
 
   def get_words(file_handle)
-    file_handle.readlines.map &:chomp
+    file_handle.readlines.map { |l| l.chomp.split " " }.flatten
   end
 end
