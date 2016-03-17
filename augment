@@ -1,2 +1,6 @@
+#!/usr/bin/env ruby
+
 require "./dic_augmentor.rb"
 
+dic = DicAugmentor.new ARGV[0]
+dic.augment!
