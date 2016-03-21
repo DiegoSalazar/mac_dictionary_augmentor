@@ -14,19 +14,15 @@ cd mac_dictionary_augmentor
 Run you'll have access to this command: 
 
 ```
-./augment PATH_TO_TERMINOLOGY_FILE
+./augment -d tech
 ```
 
-You can provide the path to your own newline separated list of terms or you can use one of the included files:
+The `-d` currently options supported are "med" and "tech".
+
+You can provide the path to your own newline separated list of terms with the `-f` flag and a file path:
 
 ```
-./augment ./technical_terms.txt
-```
-
-Or:
-
-```
-./augment ./medical_terms.txt
+./augment -f /path/to/terms.txt
 ```
 
 ## Note
