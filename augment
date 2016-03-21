@@ -1,6 +1,26 @@
 #!/usr/bin/env ruby
 
+require "optparse"
 require "./dic_augmentor.rb"
 
-dic = DicAugmentor.new ARGV[0]
-dic.augment!
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: augment [options]"
+
+  opts.on("-dDICT", "--dictionary=DICT", "Specify which built in dictionary to augment your Mac's spell checker with") do |v|
+    options[:dictionary] = v.to_sym
+  end
+
+  opts.on("-fPATH", "--file=PATH", "Specify a path to a newline separated list words to augment your Mac's spell checker with") do |v|
+    options[:file] = v
+  end
+end.parse!
+
+p options
+dic = DicAugmentor.new
+
+if options[:dictionary]
+  dic.augment_from_dict options[:dictionary]
+elsif options[:file]
+  dic.augment_from_file options[:file]
+end

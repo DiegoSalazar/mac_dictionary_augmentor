@@ -1,13 +1,35 @@
 require "fileutils"
 
 class DicAugmentor
+  InvalidDictionaryName = Class.new ArgumentError
   LOCAL_DICT_PATH = "~/Library/Spelling/LocalDictionary"
+  DICTS = {
+    med: "./medical_terms.txt",
+    tech: "./technical_terms.txt"
+  }
 
-  def initialize(word_file)
-    @word_file = word_file
+  def initialize
     @dict_path = File.expand_path LOCAL_DICT_PATH
     @merged_words = []
-    open_dict_files
+    open_local_dict_file
+  end
+
+  def augment_from_dict(dict)
+    path = DICTS[dict] || raise(InvalidDictionaryName, dict)
+    @word_file = File.open path
+    puts "#{self.class} will augment AppleSpell with words from #{path}"
+    augment!
+  end
+
+  def augment_from_file(path)
+    begin
+      @word_file = File.open path
+    rescue Errno::ENOENT => e
+      puts "[#{self.class}] could not find new dictionary file at \"#{word_file}\""
+      exit 1
+    end
+    puts "#{self.class} will augment AppleSpell with words from #{path}"
+    augment!
   end
 
   def augment!
@@ -20,20 +42,11 @@ class DicAugmentor
 
   private
 
-  def open_dict_files
-    begin
-      @word_file = File.open @word_file
-    rescue Errno::ENOENT => e
-      puts "[#{self.class}] could not find new dictionary file at #{word_file}"
-      exit 1
-    end
-
-    begin
-      @local_dict = File.open @dict_path
-    rescue Errno::ENOENT => e
-      puts "[#{self.class}] could not find local dictionary file at #{@dict_path}"
-      exit 2
-    end
+  def open_local_dict_file
+    @local_dict = File.open @dict_path
+  rescue Errno::ENOENT => e
+    puts "[#{self.class}] could not find local dictionary file at #{@dict_path}"
+    exit 2
   end
 
   def backup_local_dict
@@ -58,7 +71,7 @@ class DicAugmentor
     if system "killall AppleSpell"
       puts "Your Spell Checker has been augmented."
     else
-      puts "Could not reset spell checker, you may need to reboot."
+      puts "Could not reset spell checker, you may need to type into a system text field/area to automatically restart it."
     end
   end
 
