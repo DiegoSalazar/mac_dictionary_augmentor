@@ -3,23 +3,22 @@
 require "optparse"
 require "./dic_augmentor.rb"
 
-options = {}
+dic = DicAugmentor.new
+ARGV << '-h' if ARGV.empty?
+
 OptionParser.new do |opts|
   opts.banner = "Usage: augment [options]"
 
-  opts.on("-dDICT", "--dictionary=DICT", "Specify which built in dictionary to augment your Mac's spell checker with") do |v|
-    options[:dictionary] = v.to_sym
+  opts.on("-dDICT", "--dictionary=DICT", "Specify which built in dictionary to augment your Mac's spell checker with. Available options: tech, med") do |v|
+    dic.augment_from_dict v.to_sym
   end
 
-  opts.on("-fPATH", "--file=PATH", "Specify a path to a newline separated list words to augment your Mac's spell checker with") do |v|
-    options[:file] = v
+  opts.on("-fPATH", "--file=PATH", "Specify a path to a newline separated list of words to augment your spell checker with") do |v|
+    dic.augment_from_file v
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
   end
 end.parse!
-
-dic = DicAugmentor.new
-
-if options[:dictionary]
-  dic.augment_from_dict options[:dictionary]
-elsif options[:file]
-  dic.augment_from_file options[:file]
-end
