@@ -13,6 +13,8 @@ class DicAugmentor
     @merged_words = []
   end
 
+  # Use a builtin term list
+  # dict: a key in DICTS
   def augment_from_dict(dict)
     path = DICTS[dict] || raise(InvalidDictionaryName, dict)
     @word_file = File.open path
@@ -20,6 +22,9 @@ class DicAugmentor
     augment!
   end
 
+  # Use a custom file of new line separated words. If the words
+  # Have spaces in them they'll be split
+  # path: absolute path to file
   def augment_from_file(path)
     begin
       @word_file = File.open path
@@ -31,8 +36,10 @@ class DicAugmentor
     augment!
   end
 
+  private
+
   def augment!
-    open_local_dict_file
+    open_local_dict
     backup_local_dict
     merge_new_dict
     alphabetize_merged_dict
@@ -40,9 +47,7 @@ class DicAugmentor
     restart_applespell
   end
 
-  private
-
-  def open_local_dict_file
+  def open_local_dict
     @local_dict = File.open @dict_path
   rescue Errno::ENOENT => e
     puts "[#{self.class}] could not find local dictionary file at #{@dict_path}"
