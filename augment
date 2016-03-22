@@ -16,7 +16,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-p options
 dic = DicAugmentor.new
 
 if options[:dictionary]

@@ -11,13 +11,16 @@ git clone https://github.com/DiegoSalazar/mac_dictionary_augmentor
 cd mac_dictionary_augmentor
 ```
 
-Run you'll have access to this command: 
+### Run command: 
 
 ```
-./augment -d tech
+./augment
 ```
 
-The `-d` currently options supported are "med" and "tech".
+### Options
+
+ - `-d tech` # add the built in technical terms
+ - `-d med` # add the built in medical terms
 
 You can provide the path to your own newline separated list of terms with the `-f` flag and a file path:
 

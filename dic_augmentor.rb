@@ -11,7 +11,6 @@ class DicAugmentor
   def initialize
     @dict_path = File.expand_path LOCAL_DICT_PATH
     @merged_words = []
-    open_local_dict_file
   end
 
   def augment_from_dict(dict)
@@ -33,6 +32,7 @@ class DicAugmentor
   end
 
   def augment!
+    open_local_dict_file
     backup_local_dict
     merge_new_dict
     alphabetize_merged_dict
