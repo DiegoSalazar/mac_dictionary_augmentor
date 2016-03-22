@@ -16,7 +16,7 @@ class DicAugmentor
   # Use a builtin term list
   # dict: a key in DICTS
   def augment_from_dict(dict)
-    path = DICTS[dict] || raise(InvalidDictionaryName, dict)
+    path = DICTS[dict.to_sym] || raise(InvalidDictionaryName, dict)
     @word_file = File.open path
     puts "#{self.class} will augment AppleSpell with words from #{path}"
     augment!

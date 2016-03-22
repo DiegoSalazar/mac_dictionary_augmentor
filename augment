@@ -10,7 +10,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: augment [options]"
 
   opts.on("-dDICT", "--dictionary=DICT", "Specify which built in dictionary to augment your Mac's spell checker with. Available options: tech, med") do |v|
-    dic.augment_from_dict v.to_sym
+    dic.augment_from_dict v
   end
 
   opts.on("-fPATH", "--file=PATH", "Specify a path to a newline separated list of words to augment your spell checker with") do |v|
@@ -19,6 +19,5 @@ OptionParser.new do |opts|
 
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
-    exit
   end
 end.parse!
